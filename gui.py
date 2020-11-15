@@ -9,7 +9,6 @@ import datetime
 import json
 
 from pynotifier import Notification
-
 try:
     import tkinter as tk
 except ImportError:
