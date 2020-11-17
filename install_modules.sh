@@ -1,2 +1,1 @@
-pip install py-notifier
-pip install tkscrolledframe
+pip install -r requirements.txt

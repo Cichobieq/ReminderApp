@@ -1,2 +1,2 @@
-pynotiify
+py-notifier
 tkscrolledframe
