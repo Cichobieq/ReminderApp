@@ -8,16 +8,15 @@ import time
 import datetime
 import json
 
-from pynotifier import Notification
 try:
     import tkinter as tk
 except ImportError:
     import Tkinter as tk
 from tkscrolledframe import ScrolledFrame
 
-import notification
-import fonts
-import hello_window
+import src.notification as notification
+import src.fonts as fonts
+import src.hello_window as hello_window
 
 
 class App:
