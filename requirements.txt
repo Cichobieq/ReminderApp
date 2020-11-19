@@ -1,2 +1,3 @@
 py-notifier
 tkscrolledframe
+playsound

@@ -19,7 +19,7 @@ def notify_fn():
                 and f"{current_time}:0" == f"{current_time}:{current_date_and_time.second}"
         ):
             if element["notification"]:
-                remind_notification = Notification(
+                remind_notification = pn.Notification(
                     title=element["title"],
                     description=element["description"],
                     icon_path=r"data/img/notification-clock-icon.png",
