@@ -539,7 +539,6 @@ class App:
                 with open(r"data/all_reminds.json", "r+") as ar:
                     if value_to_search.isdecimal():
                         all_reminds_loaded = json.load(ar)
-                        print(all_reminds_loaded)
                         data_reminds_loaded_len = len(all_reminds_loaded["data"])
 
                         for i in range(data_reminds_loaded_len):
@@ -554,7 +553,7 @@ class App:
                             fg="red",
                             pady=10,
                         )
-                        incorrect_label.grid(row=4, column=0, columnspan=2)
+                        incorrect_label.grid(row=5, column=0, columnspan=2)
 
                         print("Index can't be a letter.")
 
