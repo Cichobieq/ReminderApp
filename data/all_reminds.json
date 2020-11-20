@@ -1,18 +1,1 @@
-{
-    "data": [
-        {
-            "title": "first remind",
-            "description": "first remind looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong description",
-            "date": "19/11/2020",
-            "time": "22:22",
-            "notification": true
-        },
-        {
-            "title": "my title",
-            "description": "my description",
-            "date": "19/11/2020",
-            "time": "22:25",
-            "notification": true
-        }
-    ]
-}
+{"data": []}
