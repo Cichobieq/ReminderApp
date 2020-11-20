@@ -1,2 +1,2 @@
 # ReminderApp
-Reminder app. It still grows, so it can sometimes bug :)
+Reminder app. It is still growing, so it can sometimes bug :)
