@@ -754,31 +754,41 @@ class App:
                 )
 
                 notification_sound = False
-                if not auto_delete_reminds_entry.get().isdecimal():
-                    if notification_sound_entry.get().lower() == "yes":
-                        notification_sound = True
-                    elif notification_sound_entry.get().lower() == "no":
-                        pass
-                    else:
-                        print("Type correct parameters.")
 
-                        error_label.grid(row=5, column=0, columnspan=2)
-                else:
-                    error_label.grid(row=5, column=0, columnspan=2)
+                with open(r"data/settings.json", "r+") as s:
+                    settings = json.load(s).copy()
 
-                auto_delete_reminds = True
-                if not auto_delete_reminds_entry.get().isdecimal():
-                    if auto_delete_reminds_entry.get().lower() == "yes":
-                        auto_delete_reminds = True
-                    elif auto_delete_reminds_entry.get().lower() == "no":
-                        pass
+                    if not notification_sound_entry.get().isdecimal():
+                        if notification_sound_entry.get().lower() == "yes":
+                            notification_sound = True
+                        elif notification_sound_entry.get().lower() == "no":
+                            pass
+                        else:
+                            print("Type correct parameters.")
+                            error_label.grid(row=5, column=0, columnspan=2)
                     else:
                         error_label.grid(row=5, column=0, columnspan=2)
 
-                    with open(r"data/settings.json", "r+") as s:
-                        settings = json.load(s)
-                else:
-                    error_label.grid(row=5, column=0, columnspan=2)
+                    auto_delete_reminds = False
+
+                    if not auto_delete_reminds_entry.get().isdecimal():
+                        if auto_delete_reminds_entry.get().lower() == "yes":
+                            auto_delete_reminds = True
+
+                            settings_window.destroy()
+                        elif auto_delete_reminds_entry.get().lower() == "no":
+                            settings_window.destroy()
+                        else:
+                            error_label.grid(row=5, column=0, columnspan=2)
+                    else:
+                        error_label.grid(row=5, column=0, columnspan=2)
+
+                    settings["notification_sound"] = notification_sound
+                    settings["automatic_reminds_delete"] = auto_delete_reminds
+
+                    s.seek(0)
+                    s.truncate(0)
+                    json.dump(settings, s, indent=4)
 
 
             close_only_button = tk.Button(

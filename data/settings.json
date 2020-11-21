@@ -1,4 +1,4 @@
 {
-  "notification_sound": true,
-  "automatic_reminds_delete": true
+    "notification_sound": false,
+    "automatic_reminds_delete": false
 }
