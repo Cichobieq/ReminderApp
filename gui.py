@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # import sys
+import os
 import threading
 import time
 import datetime
@@ -9,8 +10,10 @@ import json
 
 try:
     import tkinter as tk
+    from tkinter import filedialog
 except ImportError:
     import Tkinter as tk
+    from Tkinter import filedialog
 from tkscrolledframe import ScrolledFrame
 
 import modules.notification as notification
@@ -20,12 +23,9 @@ import modules.hello_window as hello_window
 
 class App:
     def __init__(self):
-<<<<<<< HEAD
         self.init_gui()
 
     def init_gui(self):
-=======
->>>>>>> 4a44466 (Stable version 1.2)
         with open(r"data/info.json", "r") as info:
             version = json.load(info)["version"]
 
@@ -534,11 +534,7 @@ class App:
             remove_label.grid(row=0, column=0, columnspan=2)
 
             remove_entry = tk.Entry(master=remove_reminds_window, font=fonts.Calibri_15)
-<<<<<<< HEAD
             remove_entry.grid(row=1, column=0, rowspan=2, ipadx=170, ipady=15, padx=10)
-=======
-            remove_entry.grid(row=1, column=0, ipadx=170, ipady=15, padx=10, pady=5)
->>>>>>> 4a44466 (Stable version 1.2)
 
             def remove_button_fn():
                 value_to_search = remove_entry.get()
@@ -549,10 +545,6 @@ class App:
                 with open(r"data/all_reminds.json", "r+") as ar:
                     if value_to_search.isdecimal():
                         all_reminds_loaded = json.load(ar)
-<<<<<<< HEAD
-=======
-                        print(all_reminds_loaded)
->>>>>>> 4a44466 (Stable version 1.2)
                         data_reminds_loaded_len = len(all_reminds_loaded["data"])
 
                         for i in range(data_reminds_loaded_len):
@@ -567,11 +559,7 @@ class App:
                             fg="red",
                             pady=10,
                         )
-<<<<<<< HEAD
                         incorrect_label.grid(row=5, column=0, columnspan=2)
-=======
-                        incorrect_label.grid(row=4, column=0, columnspan=2)
->>>>>>> 4a44466 (Stable version 1.2)
 
                         print("Index can't be a letter.")
 
@@ -615,7 +603,6 @@ class App:
                 relief=tk.GROOVE,
                 command=remove_button_fn,
             )
-<<<<<<< HEAD
             remove_button.grid(row=1, column=1, ipadx=22, ipady=2, padx=10)
 
             def remove_all_fn():
@@ -647,18 +634,6 @@ class App:
                 padx=20, pady=5,
             )
             how_to_label.grid(row=3, column=0, columnspan=2)
-=======
-            remove_button.grid(row=1, column=1, padx=10)
-
-            remove_label2 = tk.Label(
-                master=remove_reminds_window,
-                text="To check all reminds' titles and indexes click button below.",
-                font=fonts.Calibri_15,
-                padx=20,
-                pady=10,
-            )
-            remove_label2.grid(row=2, column=0, columnspan=2)
->>>>>>> 4a44466 (Stable version 1.2)
 
             def check_titles_fn():
                 show_titles_window = tk.Tk()
@@ -701,11 +676,7 @@ class App:
                 relief=tk.GROOVE,
                 command=check_titles_fn,
             )
-<<<<<<< HEAD
             check_titles_button.grid(row=4, column=0, ipadx=200, ipady=20, padx=10, pady=5, columnspan=2)
-=======
-            check_titles_button.grid(row=3, column=0, ipadx=200, ipady=20, padx=10, pady=5, columnspan=2)
->>>>>>> 4a44466 (Stable version 1.2)
 
         show_reminds_button = tk.Button(
             master=root,
@@ -726,7 +697,6 @@ class App:
         remove_remind_button.grid(row=3, column=0, padx=10, pady=5, ipadx=200, ipady=15, columnspan=2)
 
         def settings():
-<<<<<<< HEAD
             settings_window = tk.Tk()
             settings_window.title("Settings")
             settings_window.resizable(False, False)
@@ -758,11 +728,70 @@ class App:
             )
             notification_sound_label.grid(row=2, column=0)
 
+            with open(r"data/settings.json", "r") as s:
+                notification_sound = json.load(s)["notification_sound"]
+
+            if notification_sound:
+                notify_sound = "Yes"
+            else:
+                notify_sound = "No"
+
             notification_sound_entry = tk.Entry(
                 master=settings_window,
                 font=fonts.Calibri_20,
             )
+            notification_sound_entry.insert(0, notify_sound)
             notification_sound_entry.grid(row=2, column=1, ipadx=10, ipady=2, padx=10)
+
+            ask_sound_path_frame = tk.Frame(
+                master=settings_window,
+            )
+            ask_sound_path_frame.grid(row=3, column=0, columnspan=2)
+
+            ask_sound_path_label = tk.Label(
+                master=ask_sound_path_frame,
+                text="Type sound\nfile path\nor choose it\nwith file dialog.",
+                font=fonts.Calibri_15,
+                padx=10, pady=5,
+            )
+            ask_sound_path_label.grid(row=0, column=0)
+
+            def search_path_fn():
+                settings.path_filedialog = filedialog.askopenfilename(initialdir=os.getenv("HOME"), title="Choose mp3 file", filetypes=[("mp3 files", "*.mp3*"), ("all files", "*.*")])
+                ask_sound_path_entry.insert(0, path_filedialog)
+
+            search_path_button = tk.Button(
+                master=ask_sound_path_frame,
+                text="Search\npath",
+                font=fonts.Calibri_15,
+                relief=tk.GROOVE,
+                padx=30, pady=1,
+                command=search_path_fn,
+            )
+            search_path_button.grid(row=0, column=1, padx=10)
+
+            with open(r"data/settings.json", "r") as s:
+                sound_path = json.load(s)["sound_path"]
+
+            ask_sound_path_entry = tk.Entry(
+                master=ask_sound_path_frame,
+                font=fonts.Calibri_20,
+            )
+            ask_sound_path_entry.grid(row=0, column=2, ipadx=10, ipady=3, padx=10, pady=5)
+
+            if os.path.exists(sound_path):
+                ask_sound_path_entry.insert(0, sound_path)
+            else:
+                error_label = tk.Label(
+                    master=settings_window,
+                    text="Type correct parameters.",
+                    font=fonts.Calibri_15,
+                    foreground="red",
+                )
+                error_label.grid(row=6, column=0, columnspan=2)
+
+                # Check if the file is .mp3.
+                # Then continue implementing settings in "notification.py"
 
             delete_reminds = tk.Label(
                 master=settings_window,
@@ -770,13 +799,22 @@ class App:
                 font=fonts.Calibri_15,
                 padx=10, pady=10,
             )
-            delete_reminds.grid(row=3, column=0)
+            delete_reminds.grid(row=4, column=0)
+
+            with open(r"data/settings.json", "r") as s:
+                automatic_delete = json.load(s)["automatic_reminds_delete"]
+
+            if automatic_delete:
+                auto_delete = "Yes"
+            else:
+                auto_delete = "No"
 
             auto_delete_reminds_entry = tk.Entry(
                 master=settings_window,
                 font=fonts.Calibri_20,
             )
-            auto_delete_reminds_entry.grid(row=3, column=1, ipadx=10, ipady=2, padx=10)
+            auto_delete_reminds_entry.insert(0, auto_delete)
+            auto_delete_reminds_entry.grid(row=4, column=1, ipadx=10, ipady=2, padx=10)
 
             def save_and_close_fn():
                 error_label = tk.Label(
@@ -789,7 +827,7 @@ class App:
                 notification_sound = False
 
                 with open(r"data/settings.json", "r+") as s:
-                    settings = json.load(s).copy()
+                    settings_json = json.load(s).copy()
 
                     if not notification_sound_entry.get().isdecimal():
                         if notification_sound_entry.get().lower() == "yes":
@@ -798,9 +836,9 @@ class App:
                             pass
                         else:
                             print("Type correct parameters.")
-                            error_label.grid(row=5, column=0, columnspan=2)
+                            error_label.grid(row=6, column=0, columnspan=2)
                     else:
-                        error_label.grid(row=5, column=0, columnspan=2)
+                        error_label.grid(row=6, column=0, columnspan=2)
 
                     auto_delete_reminds = False
 
@@ -812,17 +850,16 @@ class App:
                         elif auto_delete_reminds_entry.get().lower() == "no":
                             settings_window.destroy()
                         else:
-                            error_label.grid(row=5, column=0, columnspan=2)
+                            error_label.grid(row=6, column=0, columnspan=2)
                     else:
-                        error_label.grid(row=5, column=0, columnspan=2)
+                        error_label.grid(row=6, column=0, columnspan=2)
 
-                    settings["notification_sound"] = notification_sound
-                    settings["automatic_reminds_delete"] = auto_delete_reminds
+                    settings_json["notification_sound"] = notification_sound
+                    settings_json["automatic_reminds_delete"] = auto_delete_reminds
 
                     s.seek(0)
                     s.truncate(0)
-                    json.dump(settings, s, indent=4)
-
+                    json.dump(settings_json, s, indent=4)
 
             close_only_button = tk.Button(
                 master=settings_window,
@@ -831,7 +868,7 @@ class App:
                 relief=tk.GROOVE,
                 command=settings_window.destroy,
             )
-            close_only_button.grid(row=4, column=0, ipadx=40, ipady=10, padx=5, pady=10)
+            close_only_button.grid(row=5, column=0, ipadx=10, ipady=10, padx=5, pady=5)
 
             save_and_close_button = tk.Button(
                 master=settings_window,
@@ -840,10 +877,7 @@ class App:
                 relief=tk.GROOVE,
                 command=save_and_close_fn,
             )
-            save_and_close_button.grid(row=4, column=1, ipadx=60, ipady=10, padx=5, pady=10)
-=======
-            pass
->>>>>>> 4a44466 (Stable version 1.2)
+            save_and_close_button.grid(row=5, column=1, ipadx=60, ipady=10, padx=5, pady=5)
 
         settings_button = tk.Button(
             master=root,

@@ -1,4 +1,5 @@
 {
-  "notification_sound": false,
-  "automatic_reminds_delete": true
+    "notification_sound": false,
+    "sound_path": "/home/michals/Python",
+    "automatic_reminds_delete": false
 }
