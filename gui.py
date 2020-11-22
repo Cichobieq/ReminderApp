@@ -20,9 +20,12 @@ import modules.hello_window as hello_window
 
 class App:
     def __init__(self):
+<<<<<<< HEAD
         self.init_gui()
 
     def init_gui(self):
+=======
+>>>>>>> 4a44466 (Stable version 1.2)
         with open(r"data/info.json", "r") as info:
             version = json.load(info)["version"]
 
@@ -531,7 +534,11 @@ class App:
             remove_label.grid(row=0, column=0, columnspan=2)
 
             remove_entry = tk.Entry(master=remove_reminds_window, font=fonts.Calibri_15)
+<<<<<<< HEAD
             remove_entry.grid(row=1, column=0, rowspan=2, ipadx=170, ipady=15, padx=10)
+=======
+            remove_entry.grid(row=1, column=0, ipadx=170, ipady=15, padx=10, pady=5)
+>>>>>>> 4a44466 (Stable version 1.2)
 
             def remove_button_fn():
                 value_to_search = remove_entry.get()
@@ -542,6 +549,10 @@ class App:
                 with open(r"data/all_reminds.json", "r+") as ar:
                     if value_to_search.isdecimal():
                         all_reminds_loaded = json.load(ar)
+<<<<<<< HEAD
+=======
+                        print(all_reminds_loaded)
+>>>>>>> 4a44466 (Stable version 1.2)
                         data_reminds_loaded_len = len(all_reminds_loaded["data"])
 
                         for i in range(data_reminds_loaded_len):
@@ -556,7 +567,11 @@ class App:
                             fg="red",
                             pady=10,
                         )
+<<<<<<< HEAD
                         incorrect_label.grid(row=5, column=0, columnspan=2)
+=======
+                        incorrect_label.grid(row=4, column=0, columnspan=2)
+>>>>>>> 4a44466 (Stable version 1.2)
 
                         print("Index can't be a letter.")
 
@@ -600,6 +615,7 @@ class App:
                 relief=tk.GROOVE,
                 command=remove_button_fn,
             )
+<<<<<<< HEAD
             remove_button.grid(row=1, column=1, ipadx=22, ipady=2, padx=10)
 
             def remove_all_fn():
@@ -631,6 +647,18 @@ class App:
                 padx=20, pady=5,
             )
             how_to_label.grid(row=3, column=0, columnspan=2)
+=======
+            remove_button.grid(row=1, column=1, padx=10)
+
+            remove_label2 = tk.Label(
+                master=remove_reminds_window,
+                text="To check all reminds' titles and indexes click button below.",
+                font=fonts.Calibri_15,
+                padx=20,
+                pady=10,
+            )
+            remove_label2.grid(row=2, column=0, columnspan=2)
+>>>>>>> 4a44466 (Stable version 1.2)
 
             def check_titles_fn():
                 show_titles_window = tk.Tk()
@@ -673,7 +701,11 @@ class App:
                 relief=tk.GROOVE,
                 command=check_titles_fn,
             )
+<<<<<<< HEAD
             check_titles_button.grid(row=4, column=0, ipadx=200, ipady=20, padx=10, pady=5, columnspan=2)
+=======
+            check_titles_button.grid(row=3, column=0, ipadx=200, ipady=20, padx=10, pady=5, columnspan=2)
+>>>>>>> 4a44466 (Stable version 1.2)
 
         show_reminds_button = tk.Button(
             master=root,
@@ -694,6 +726,7 @@ class App:
         remove_remind_button.grid(row=3, column=0, padx=10, pady=5, ipadx=200, ipady=15, columnspan=2)
 
         def settings():
+<<<<<<< HEAD
             settings_window = tk.Tk()
             settings_window.title("Settings")
             settings_window.resizable(False, False)
@@ -808,6 +841,9 @@ class App:
                 command=save_and_close_fn,
             )
             save_and_close_button.grid(row=4, column=1, ipadx=60, ipady=10, padx=5, pady=10)
+=======
+            pass
+>>>>>>> 4a44466 (Stable version 1.2)
 
         settings_button = tk.Button(
             master=root,
