@@ -87,8 +87,6 @@ class App:
 
                 time.sleep(1)
 
-                date_fn()
-
         date_thread = threading.Thread(target=date_fn)
         date_thread.start()
 
@@ -757,8 +755,12 @@ class App:
             ask_sound_path_label.grid(row=0, column=0)
 
             def search_path_fn():
-                settings.path_filedialog = filedialog.askopenfilename(initialdir=os.getenv("HOME"), title="Choose mp3 file", filetypes=[("mp3 files", "*.mp3*"), ("all files", "*.*")])
-                ask_sound_path_entry.insert(0, path_filedialog)
+                global path_filedialog
+                path_filedialog = filedialog.askopenfilename(
+                    initialdir=os.getenv("HOME"),
+                    title="Choose mp3 file",
+                    filetypes=[("mp3 files", "*.mp3*")]
+                )
 
             search_path_button = tk.Button(
                 master=ask_sound_path_frame,
@@ -773,25 +775,40 @@ class App:
             with open(r"data/settings.json", "r") as s:
                 sound_path = json.load(s)["sound_path"]
 
-            ask_sound_path_entry = tk.Entry(
-                master=ask_sound_path_frame,
-                font=fonts.Calibri_20,
-            )
-            ask_sound_path_entry.grid(row=0, column=2, ipadx=10, ipady=3, padx=10, pady=5)
+            try:
+                print_path_label = tk.Label(
+                    master=ask_sound_path_frame,
+                    text=path_filedialog,
+                    font=fonts.Calibri_20,
+                )
+            except NameError:
+                print_path_label = tk.Label(
+                    master=ask_sound_path_frame,
+                    text=sound_path,
+                    font=fonts.Calibri_20,
+                )
+
+            print_path_label.grid(row=0, column=2, ipadx=10, ipady=3, padx=10, pady=5)
 
             if os.path.exists(sound_path):
-                ask_sound_path_entry.insert(0, sound_path)
+                if sound_path.endswith(".mp3"):
+                    print_path_label["text"] = path_filedialog
+                else:
+                    error_label = tk.Label(
+                        master=settings_window,
+                        text="File may only be .mp3.",
+                        font=fonts.Calibri_15,
+                        foreground="red",
+                    )
+                    error_label.grid(row=7, column=0, columnspan=2)
             else:
                 error_label = tk.Label(
                     master=settings_window,
-                    text="Type correct parameters.",
+                    text="Path doesn't exist.",
                     font=fonts.Calibri_15,
                     foreground="red",
                 )
                 error_label.grid(row=6, column=0, columnspan=2)
-
-                # Check if the file is .mp3.
-                # Then continue implementing settings in "notification.py"
 
             delete_reminds = tk.Label(
                 master=settings_window,
@@ -823,6 +840,15 @@ class App:
                     font=fonts.Calibri_15,
                     foreground="red",
                 )
+
+                with open(r"data/settings.json", "r+") as s:
+                    settings_json = json.load(s).copy()
+
+                    settings_json["sound_path"] = path_filedialog
+
+                    s.seek(0)
+                    s.truncate(0)
+                    json.dump(settings_json, s, indent=4)
 
                 notification_sound = False
 
