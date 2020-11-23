@@ -2,7 +2,7 @@ import gui
 
 
 def main():
-    app = gui.App()
-    del app
+    gui.main()
 
-main()
+if __name__ == "__main__":
+    main()

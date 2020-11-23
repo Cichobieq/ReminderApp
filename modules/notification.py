@@ -42,11 +42,15 @@ def notify_fn():
                     )
                     remind_notification.send()
 
-                    with open(r"data/all_reminds.json") as s:
+                    with open(r"data/all_reminds.json", "r+") as s:
                         settings_json = json.load(s)
 
                         if automatic_reminds_delete:
                             del element
+
+                        s.seek(0)
+                        s.truncate(0)
+                        json.dump(settings_json, s, indent=4)
 
                     if notification_sound:
                         if os.path.exists(sound_path):
