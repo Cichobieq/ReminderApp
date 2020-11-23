@@ -792,7 +792,10 @@ class App:
 
             if os.path.exists(sound_path):
                 if sound_path.endswith(".mp3"):
-                    print_path_label["text"] = path_filedialog
+                    try:
+                        print_path_label["text"] = path_filedialog
+                    except NameError:
+                        print_path_label["text"] = sound_path
                 else:
                     error_label = tk.Label(
                         master=settings_window,
@@ -844,7 +847,10 @@ class App:
                 with open(r"data/settings.json", "r+") as s:
                     settings_json = json.load(s).copy()
 
-                    settings_json["sound_path"] = path_filedialog
+                    try:
+                        settings_json["sound_path"] = path_filedialog
+                    except NameError:
+                        pass
 
                     s.seek(0)
                     s.truncate(0)
